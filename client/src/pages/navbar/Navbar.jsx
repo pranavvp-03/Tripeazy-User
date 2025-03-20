@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, } from "react-icons/fi";
 import logo from "../../assets/logo.png";
+import { FaBell } from "react-icons/fa";
 
 const Navbar = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
 
   return (
     <nav
@@ -69,6 +71,7 @@ const Navbar = () => {
         >
           Sign Up
         </button>
+        
 
         {/* Mobile Menu Button */}
         <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
