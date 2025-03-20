@@ -2,7 +2,8 @@ import React from "react";
 import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
 import AdvertisementSection from "./AddvertisementSecton";
-import Preplanned from "./PopularDestination";
+import PopularDestinations from "./PopularDestination";
+import PreplannedPackages from "./PreplanedPackage";
 
 const Home = () => {
   return (
@@ -11,8 +12,9 @@ const Home = () => {
       <div className="flex justify-center items-center h-full min-h-[24vh] ">
       <SearchBar />
     </div>
-    <Preplanned/>
+    <PopularDestinations/>
     <AdvertisementSection/>
+    <PreplannedPackages/>
    
  
       {/* Popular Destinations */}

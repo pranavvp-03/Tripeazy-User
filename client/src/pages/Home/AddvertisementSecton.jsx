@@ -56,7 +56,7 @@ export default function AdvertisementSection() {
             key={currentAd.img}
             src={currentAd.img}
             alt="Advertisement"
-            className="w-full md:w-1/2 lg:w-1/3 h-60 md:h-[400px] object-cover rounded-xl shadow-lg"
+            className="w-full md:w-1/2 lg:w-1/2 h-50 md:h-[300px] object-cover rounded-xl shadow-lg "
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
