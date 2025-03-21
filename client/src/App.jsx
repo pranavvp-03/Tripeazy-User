@@ -4,6 +4,9 @@ import Navbar from "./pages/navbar/Navbar";
 import Login from "./pages/accounts/Login";
 import Register from "./pages/accounts/Register";
 import TermsAndConditions from "./pages/accounts/TermsAndConditions";
+import { Toaster } from 'react-hot-toast';
+import AgencyPage from "./pages/Agencies/AgencyPage";
+
 
 function App() {
   const location = useLocation();
@@ -11,6 +14,7 @@ function App() {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       
       <Routes>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import ceo from '../../assets/Ceo.png';
 import { Link } from 'react-router-dom';
+import axiosInstance from 'src/utils/axiosInstance';
+import OtpCard from './OtpCard';
+import OtpPopup from './OtpCard';
+import toast from 'react-hot-toast';
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,6 +14,7 @@ const RegisterPage = () => {
     confirmPassword: ''
   });
 
+  const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -43,16 +48,46 @@ const RegisterPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+
     if (validateForm()) {
-      console.log('Form Data:', formData);
-      alert('Account created successfully!');
+
+      try {
+        const response = await axiosInstance.post('/auth/register',{
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          password: formData.password,
+        });
+        setShowOtpPopup(true)
+        toast.success(response.data.message||"otp sended successfully")
+        console.log("otp sended successfully")
+       
+      } catch (error) {
+        console.error("Error sending OTP:", error.response?.data?.message || error.message);
+        toast.error(error.response?.data?.message || "Failed to send OTP");
+      }
+     
+      
     }
   };
 
+  const handleClose = ()=>{
+    setShowOtpPopup(false)
+    console.log("otp successfully closed")
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      {showOtpPopup &&(
+        <OtpPopup onSubmit={(otp)=>{
+          console.log("entered otp",otp);
+          setShowOtpPopup(false)
+        }} onClose={handleClose}
+        userData={formData}/>
+      )}
       <div className="w-full max-w-4xl bg-white p-10 flex rounded-2xl shadow-lg">
         {/* Left Section - Form */}
         <div className="w-1/2 pr-8">
@@ -75,7 +110,7 @@ const RegisterPage = () => {
               <input type="checkbox" className="mr-2" required />
               I agree to the <Link to="/terms-and-conditions" className="text-gray-600 underline">Terms & Conditions</Link>.
             </div>
-            <button type="submit" className="w-full bg-gray-800 text-white p-3 rounded-lg text-lg">Create an account</button>
+            <button type="submit" className="w-full bg-gray-800 text-white p-3 rounded-lg text-lg">Send Otp</button>
             <div className="text-center my-2 text-gray-500">OR</div>
             <button className="w-full flex items-center justify-center border p-3 rounded-lg">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" className="w-6 h-6 mr-2" />
