@@ -5,6 +5,7 @@ import Login from "./pages/accounts/Login";
 import Register from "./pages/accounts/Register";
 import TermsAndConditions from "./pages/accounts/TermsAndConditions";
 import { Toaster } from 'react-hot-toast';
+import AgencyList from "./pages/Agencies/AgencyList";
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path="/terms-and-conditions" element={<TermsAndConditions/>}/>
         <Route path="/" element={<Home />} />
+        <Route path="/agencies" element={<AgencyList/>}/>
       </Routes>
     </>
   );

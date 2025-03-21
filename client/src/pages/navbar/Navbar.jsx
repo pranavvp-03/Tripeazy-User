@@ -11,9 +11,11 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Contact us", path: "/contact" },
     { name: "Agencies", path: "/agencies" },
-    { name: "About us", path: "/about" },
+    { name: "Packages", path: "/packages" },
+    { name: "Blog", path: "/blogs"},
+    { name: "About us", path: "/about-us" },
+   
   ];
 
   // Scroll Effect
@@ -52,7 +54,7 @@ const Navbar = () => {
                   className={`text-lg font-medium transition ${
                     location.pathname === item.path
                       ? "text-pink-600 font-bold"
-                      : "text-black"
+                      : "text-bl"
                   }`}
                 >
                   {item.name}

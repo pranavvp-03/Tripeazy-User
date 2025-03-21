@@ -1,7 +1,8 @@
-const User = require("../models/User")
-const Otp = require("../models/otpModel")
+const User = require("../models/user/User")
+const Otp = require("../models/user/otpModel")
 const bcrypt = require("bcrypt")
-const sendMail = require("../utils/mailer")
+const sendMail = require("../utils/mailer");
+const agency = require("../models/agency/agency");
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -56,4 +57,16 @@ exports.verifyOtp = async (req, res) => {
       res.status(500).json({ message: "Error verifying OTP. Please try again." });
     }
   };
+
+
+exports.fetchAgencies = async (req, res) =>{
+    try {
+      console.log("agency fetching function is working")
+      const agencies = await agency.find({status:"Accepted"});
+      res.status(200).json(agencies);
+      console.log("agencies data sented successfully");
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching agencies', error });
+    }
+}
   
