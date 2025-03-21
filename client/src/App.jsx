@@ -5,7 +5,7 @@ import Login from "./pages/accounts/Login";
 import Register from "./pages/accounts/Register";
 import TermsAndConditions from "./pages/accounts/TermsAndConditions";
 import { Toaster } from 'react-hot-toast';
-import AgencyPage from "./pages/Agencies/AgencyPage";
+
 
 
 function App() {
