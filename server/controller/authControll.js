@@ -89,9 +89,11 @@ exports.verifyOtp = async (req, res) => {
         )
         
         res.status(200).json({ message: `Login successfull. Welcome to Tripeazy ${user.name}`, user: {
+          _id: user._id,
           name: user.name,
           email: user.email,
           phone: user.phone,
+          profilePhoto: user.profilePhoto,
         }});
     } catch (error) {
       console.error("Login error:", error);

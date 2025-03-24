@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authRoute = require("./Routes/authRoutes")
 const packageRoute = require("./Routes/packageRoute")
+const uploadRoute = require("./Routes/uploadRoute")
 const app = express();
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(cors({
 
 app.use("/api/auth",authRoute)
 app.use("/api/packages",packageRoute)
-
+app.use("/api/upload",uploadRoute );
 
 
 
