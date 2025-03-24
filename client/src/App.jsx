@@ -6,6 +6,9 @@ import Register from "./pages/accounts/Register";
 import TermsAndConditions from "./pages/accounts/TermsAndConditions";
 import { Toaster } from 'react-hot-toast';
 import AgencyList from "./pages/Agencies/AgencyList";
+import  ProtectedRoute from "./utils/ProtectRoute"
+import Packages from "./pages/packages/package";
+
 
 
 
@@ -19,11 +22,14 @@ function App() {
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={<ProtectedRoute><Login /></ProtectedRoute>} />
+        <Route path="/register" element={<ProtectedRoute><Register/></ProtectedRoute>}/>
         <Route path="/terms-and-conditions" element={<TermsAndConditions/>}/>
         <Route path="/" element={<Home />} />
         <Route path="/agencies" element={<AgencyList/>}/>
+        <Route path="/packages" element={<Packages/>}/>
+       
+
       </Routes>
     </>
   );

@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FiMenu, FiX, } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice";
 import logo from "../../assets/logo.png";
-import { FaBell } from "react-icons/fa";
 
 const Navbar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Access Redux state
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Agencies", path: "/agencies" },
     { name: "Packages", path: "/packages" },
-    { name: "Blog", path: "/blogs"},
+    { name: "Blog", path: "/blogs" },
     { name: "About us", path: "/about-us" },
-   
   ];
 
   // Scroll Effect
@@ -30,6 +35,11 @@ const Navbar = () => {
     };
   }, []);
 
+  // Logout Handler
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.href = "/login"; // Redirect to login after logout
+  };
 
   return (
     <nav
@@ -40,7 +50,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center py-5 px-4 md:px-10">
         {/* Logo */}
         <div className="flex items-center">
-          <img src={logo} alt="Logo" className="w-11 h-11 mr-3 " />
+          <img src={logo} alt="Logo" className="w-11 h-11 mr-3" />
           <h1 className="text-3xl font-bold text-black">Tripeazy</h1>
         </div>
 
@@ -54,7 +64,7 @@ const Navbar = () => {
                   className={`text-lg font-medium transition ${
                     location.pathname === item.path
                       ? "text-pink-600 font-bold"
-                      : "text-bl"
+                      : "text-black"
                   }`}
                 >
                   {item.name}
@@ -62,18 +72,28 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          {/* Underline spanning all menu items */}
           <div className="w-full h-1 bg-black mt-2"></div>
         </div>
 
-        {/* Sign Up Button */}
-        <button
-          className="hidden md:block px-5 py-2 bg-purple-600 text-white rounded-lg"
-          onClick={() => (window.location.href = "/login")}
-        >
-          Sign Up
-        </button>
-        
+        {/* Conditional Button - Login/Logout */}
+        {isAuthenticated ? (
+          <div className="hidden md:flex items-center space-x-4">
+            <span className="text-lg font-medium text-black">Hey, {user?.name}</span>
+            <button
+              className="px-5 py-2 bg-red-600 text-white rounded-lg"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <button
+            className="hidden md:block px-5 py-2 bg-purple-600 text-white rounded-lg"
+            onClick={() => (window.location.href = "/login")}
+          >
+            Sign Up
+          </button>
+        )}
 
         {/* Mobile Menu Button */}
         <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
@@ -100,6 +120,21 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            {isAuthenticated ? (
+              <button
+                className="px-5 py-2 bg-red-600 text-white rounded-lg"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                className="px-5 py-2 bg-purple-600 text-white rounded-lg"
+                onClick={() => (window.location.href = "/login")}
+              >
+                Sign Up
+              </button>
+            )}
           </ul>
         </div>
       )}

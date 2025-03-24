@@ -1,21 +1,20 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./redux/store";
 import App from "./App.jsx";
-
-// Suppress React Router v7 Warnings
-const routerOptions = {
-  future: {
-    v7_startTransition: true,
-    v7_relativeSplatPath: true,
-  },
-}; 
+import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter {...routerOptions}>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </StrictMode>
 );
