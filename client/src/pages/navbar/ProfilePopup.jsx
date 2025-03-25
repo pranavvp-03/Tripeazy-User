@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { logout } from "../../redux/authSlice";
 import { PencilIcon } from "@heroicons/react/24/solid";
+import  updateProfilePhoto  from "../../redux/authSlice"
 
 const ProfilePopup = ({ user, blogs, onClose }) => {
   const dispatch = useDispatch();
@@ -40,11 +41,13 @@ const ProfilePopup = ({ user, blogs, onClose }) => {
       formData.append("file", file);
       formData.append("type", "profile");
       formData.append("userId", user._id);
-      console.log(user,"its user id")
+      
       const response = await axios.post("http://localhost:5000/api/upload/upload-image",formData, {
         headers: { "Content-Type": "multipart/form-data" },withCredentials:true,
       });
-     
+      console.log(response.data.profilePhoto || response.data.data?.profilePhoto,"its photo url")
+      const newPhotoUrl = response.data.profilePhoto || response.data.data?.profilePhoto; // Assuming this returns the photo URL
+      dispatch(updateProfilePhoto(newPhotoUrl)); // Update Redux state with new photo
       alert("Profile photo updated successfully!");
       console.log(response.data);
     } catch (error) {

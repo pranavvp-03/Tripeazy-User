@@ -48,15 +48,13 @@ const getPackageById = async (req, res) => {
 // Get Organized Packages
 const getOrganizedPackages = async (req, res) => {
   try {
-    const { agencyId } = req.query;
+    console.log("hitted organaised")
+    
 
-    if (!agencyId) {
-      return res.status(400).json({ message: "Agency ID is required" });
-    }
-
-    const organizedPackages = await organizedPackage.find({ agencyId });
-
+    const organizedPackages = await organizedPackage.find();
+    console.log(organizedPackages,"its organaised packages")
     res.status(200).json(organizedPackages);
+    console.log("organaised sent successfully")
   } catch (error) {
     res.status(500).json({ message: "Error fetching organized packages", error });
   }

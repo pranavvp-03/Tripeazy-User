@@ -1,36 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { fetchPackages } from "./packageService";
+import React, { useState, useEffect } from "react";
+import { fetchPackages, searchPackages } from "./packageService";
 import PackageCard from "./PackageCard";
 
-const AllPackages = ({ packages, setPackages }) => {
+const AllPackages = ({ searchQuery }) => {
+  const [packages, setPackages] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadPackages = async () => {
+    const getPackages = async () => {
       try {
-        if (packages.length === 0) {
-          const data = await fetchPackages(1, 10);
-          setPackages(data.packages);
+        setLoading(true);
+
+        // If searchQuery exists, perform search
+        if (searchQuery) {
+          const searchData = await searchPackages(searchQuery);
+          setSearchResults(searchData);
+        } else {
+          const data = await fetchPackages();
+          setPackages(data?.packages || []);
         }
       } catch (error) {
-        console.error("Failed to fetch packages:", error);
+        setError("Failed to fetch packages");
       } finally {
         setLoading(false);
       }
     };
 
-    loadPackages();
-  }, [setPackages, packages]);
+    getPackages();
+  }, [searchQuery]);
 
   if (loading) return <p>Loading packages...</p>;
+  if (error) return <p>{error}</p>;
+
+  // Display search results if available
+  const displayPackages = searchResults.length > 0 ? searchResults : packages;
 
   return (
-    <div className="flex flex-wrap gap-4">
-      {packages.length > 0 ? (
-        packages.map((pkg) => <PackageCard key={pkg._id} data={pkg} />)
-      ) : (
-        <p>No packages found</p>
-      )}
+    <div className="container mx-auto">
+      <h1 className="text-2xl font-bold mb-4">
+        {searchResults.length > 0 ? "Search Results" : "All Packages"}
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {displayPackages.length > 0 ? (
+          displayPackages.map((pkg) => <PackageCard key={pkg._id} pkg={pkg} />)
+        ) : (
+          <p>No packages available.</p>
+        )}
+      </div>
     </div>
   );
 };

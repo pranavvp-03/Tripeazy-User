@@ -10,7 +10,9 @@ exports.uploadImage = async (req, res) => {
 
     // Upload to Cloudinary
     const result = await new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+        const folderName = type === 'profile' ? 'profile' : 'blog';
+
+      const uploadStream = cloudinary.uploader.upload_stream({ resource_type: 'image',folder: folderName }, (error, result) => {
         if (error) reject(error);
         else resolve(result);
       });

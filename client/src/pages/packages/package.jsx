@@ -3,44 +3,46 @@ import PackagesNavbar from "./PackagesNavbar";
 import Preplanned from "./Preplaned";
 import AllPackages from "./AllPackages";
 import Guidance from "./Guidence";
-import TabsExample from "./TabsExample";
+
+import { fetchOrganizedPackages } from "./packageService";
+import CategoryTabs from "./Catogorytab";
 
 const Packages = () => {
   const [activeTab, setActiveTab] = useState("Packages");
-  const [packages, setPackages] = useState([]);
+  
 
+ 
   const renderComponent = () => {
     switch (activeTab) {
-      case "Preplanned":
-        return <Preplanned />;
+      
       case "Packages":
-        return <AllPackages packages={packages} setPackages={setPackages} />;
+        return <AllPackages/>;
+      case "Preplanned":
+        return <Preplanned />;  
       case "Guidance":
         return <Guidance />;
       default:
-        return <AllPackages packages={packages} setPackages={setPackages} />;
+        return <AllPackages />;
     }
   };
 
   return (
     <div>
-      {/* Navbar and Tabs Section */}
       <div className="mb-5">
         <PackagesNavbar
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          setPackages={setPackages}
+          setActiveTab={(tab) => {
+            setActiveTab(tab);
+            
+          }}
+          
         />
       </div>
-
-      {/* Conditional Component Rendering */}
-      <div>
-        {activeTab === "Packages" ? (
-          <TabsExample />
-        ) : (
-          renderComponent()
-        )}
+      <div className="flex justify-center items-center mt-4">
+        <CategoryTabs/>
       </div>
+
+      <div>{renderComponent()}</div>
     </div>
   );
 };
