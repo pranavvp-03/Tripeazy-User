@@ -9,6 +9,7 @@ import AgencyList from "./pages/Agencies/AgencyList";
 import  ProtectedRoute from "./utils/ProtectRoute"
 import Packages from "./pages/packages/package";
 import BlogList from "./pages/Blog/BlogList";
+import AboutUs from "./pages/aboutus/Aboutus";
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/agencies" element={<AgencyList/>}/>
         <Route path="/packages" element={<Packages/>}/>
         <Route path="/blogs" element={<BlogList/>}/>
+        <Route path="/about-us" element={<AboutUs/>}/>
        
 
       </Routes>
