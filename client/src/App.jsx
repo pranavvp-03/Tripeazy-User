@@ -10,6 +10,7 @@ import  ProtectedRoute from "./utils/ProtectRoute"
 import Packages from "./pages/packages/package";
 import BlogList from "./pages/Blog/BlogList";
 import AboutUs from "./pages/aboutus/Aboutus";
+import AgencyDetailPage from "./pages/Agencies/AgencyDetailsPage";
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/packages" element={<Packages/>}/>
         <Route path="/blogs" element={<BlogList/>}/>
         <Route path="/about-us" element={<AboutUs/>}/>
+        <Route path="/agency/:agencyId" element={<AgencyDetailPage/>} />
        
 
       </Routes>

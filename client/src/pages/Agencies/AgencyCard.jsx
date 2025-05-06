@@ -1,9 +1,21 @@
+// components/AgencyCard.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';  // Use useNavigate instead of useHistory
 import island from '../../assets/island.png';
 
 const AgencyCard = ({ agency }) => {
+  const navigate = useNavigate();  // Get the navigate function
+
+  // Handle agency card click
+  const handleClick = () => {
+    navigate(`/agency/${agency._id}`);  // Use navigate to go to the agency detail page
+  };
+
   return (
-    <div className="w-full h-[180px] overflow-hidden rounded-xl shadow-md flex bg-white">
+    <div 
+      className="w-full h-[180px] overflow-hidden rounded-xl shadow-md flex bg-white cursor-pointer"
+      onClick={handleClick}  // Trigger onClick on card click
+    >
       {/* Left Section: Image */}
       <img
         src={agency.image || island}
