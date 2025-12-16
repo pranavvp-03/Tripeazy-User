@@ -15,6 +15,7 @@ import AgencyDetailPage from "./pages/Agencies/AgencyDetailsPage";
 
 
 
+
 function App() {
   const location = useLocation();
   const hideNavbarRoutes = ["/login", "/register","/terms-and-conditions"]; // Add other pages if needed

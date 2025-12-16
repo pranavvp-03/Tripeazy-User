@@ -35,6 +35,27 @@ exports.fetchBlogs = async (req, res) => {
 };
 
 
+exports.getSingleBlog = async (req,res) =>{
+    try {
+      console.log("is the get single blog function is working ")
+      const blogId = req.params.id;
+      console.log(req.params.id,"its requested params id")
+      const blog = await Blog.findById(blogId)
+      .populate("author","companyName image");
+
+      if(!blog){
+        return res.status(404).json({message: "blog not found"});
+      }
+      console.log("everything is perfect and also sended response")
+      res.status(200).json(blog)
+
+    } catch (error) {
+      console.error("error fetching in single blog",error);
+      res.status(500).json({message:"internal server error"});
+    }
+}
+
+
 exports.SaveItem = async (req, res) => {
     try {
       const { id } = req.params;

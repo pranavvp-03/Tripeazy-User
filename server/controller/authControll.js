@@ -9,7 +9,7 @@ const sendMail = require("../utils/mailer");
 const agency = require("../models/agency/agency");
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
-
+  
 exports.registerUser = async (req, res) => {
   const { name, phone, email, password } = req.body;
 
@@ -19,15 +19,16 @@ exports.registerUser = async (req, res) => {
 
     // Generate and hash OTP
     const otp = generateOTP();
-    console.log(otp,"otp")
+    console.log(otp,"otp");
     const hashedOtp = await bcrypt.hash(otp, 10);
     await Otp.create({ email, otp: hashedOtp });
 
     // Send email
     const subject = "Tripeazy - Complete Your Registration";
     const text = `Hello ${name},\n\nYour OTP for registration is: ${otp}\nIt is valid for 5 minutes.\n\nThank you for choosing Tripeazy!`;
-
+    console.log(email,subject,text,"this dats is sending to send mail function")
     await sendMail(email, subject, text);
+    // console.log(email,subject,text,"its datas")
     res.status(200).json({ message: "OTP sent. Please verify to complete registration." });
 
   } catch (error) {
